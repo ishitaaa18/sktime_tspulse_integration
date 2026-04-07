@@ -161,7 +161,7 @@ class TSPulseClassifier(BaseClassifier):
             from tsfm_public.toolkit.dataset import ClassificationDFDataset
             from transformers import Trainer, EarlyStoppingCallback, set_seed
             from torch.optim import AdamW
-            from torch.optim.lr_scheduler import OneCycleLR
+            from transformers import get_cosine_schedule_with_warmup
             from tsfm_public.toolkit.lr_finder import optimal_lr_finder
             from sklearn.preprocessing import LabelEncoder
             import math
@@ -291,11 +291,12 @@ class TSPulseClassifier(BaseClassifier):
         )
 
         optimizer = AdamW(self.model_.parameters(), lr=suggested_lr)
-        scheduler = OneCycleLR(
+        total_steps = self.n_epochs * math.ceil(len(train_dataset) / self.batch_size)
+        warmup_steps = max(1, int(0.1 * total_steps))
+        scheduler = get_cosine_schedule_with_warmup(
             optimizer,
-            suggested_lr,
-            epochs=self.n_epochs,
-            steps_per_epoch=math.ceil(len(train_dataset) / self.batch_size),
+            num_warmup_steps=warmup_steps,
+            num_training_steps=total_steps,
         )
 
         trainer_kwargs = {

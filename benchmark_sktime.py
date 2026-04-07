@@ -32,11 +32,13 @@ print(f"Test size: {len(X_test)}")
 print("\n[2/4] Training TSPulseClassifier...")
 
 tspulse = TSPulseClassifier(
-    n_epochs=30,        # keep small for speed
-    batch_size=16,
+    n_epochs=500,
+    batch_size=32,
     freeze_backbone=False,
     learning_rate=1e-4,
-    verbose=True
+    early_stopping=True,
+    early_stopping_patience=20,
+    verbose=True,
 )
 
 tspulse.fit(X_train, y_train)
