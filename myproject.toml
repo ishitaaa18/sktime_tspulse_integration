@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools>=67.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "tspulse-sktime"
+version = "0.1.0"
+description = "TSPulse foundation model integration for sktime time series classification"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Your Name", email = "your.email@example.com" }
+]
+maintainers = [
+    { name = "Your Name", email = "your.email@example.com" }
+]
+keywords = [
+    "time-series",
+    "classification",
+    "deep-learning",
+    "foundation-model",
+    "tspulse",
+    "sktime",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+# Fix #29 / review #2: minimum Python version raised to 3.9 (matches _tags)
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.21.0",
+    "scipy>=1.7.0",
+    "scikit-learn>=1.0.0",
+    "pandas>=1.3.0",
+    "torch>=2.0.0",
+    "transformers>=4.30.0",
+    # Fix #3: tsfm_public listed as an explicit dependency
+    "granite-tsfm",
+    "joblib>=1.0.0",
+    "sktime>=0.26.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "pre-commit>=3.0.0",
+]
+tuning = [
+    "optuna>=3.0.0",
+]
+viz = [
+    "matplotlib>=3.5.0",
+    "seaborn>=0.12.0",
+]
+all = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "pre-commit>=3.0.0",
+    "optuna>=3.0.0",
+    "matplotlib>=3.5.0",
+    "seaborn>=0.12.0",
+]
+
+[project.urls]
+Homepage      = "https://github.com/ishitaaa18/sktime_tspulse_integration"
+"Bug Reports" = "https://github.com/ishitaaa18/sktime_tspulse_integration/issues"
+Source        = "https://github.com/ishitaaa18/sktime_tspulse_integration"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sktime_ext*"]
+
+[tool.black]
+line-length = 99
+target-version = ["py39", "py310", "py311"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "-v --tb=short"
